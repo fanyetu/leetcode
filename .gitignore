@@ -1,0 +1,44 @@
+HELP.md
+target/
+!.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/node_modules/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+
+### VS Code ###
+.vscode/
+/rebel.xml
+/auth/src/main/resources/rebel.xml
+/common/src/main/java/rebel.xml
+/common/src/main/resources/rebel.xml
+/proxy/core/src/main/resources/rebel.xml
+/proxy/core/rebel.xml
+/gateway/src/main/resources/rebel.xml
+/system/src/main/resources/rebel.xml
+/system/src/main/vue/node_modules/
+
+
+/auth/rebel.xml
