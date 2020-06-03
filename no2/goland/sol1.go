@@ -3,38 +3,34 @@ package main
 import (
 	"fmt"
 	"math"
+	"math/big"
+	"strconv"
 )
 
 func main() {
-	n1 := &ListNode{Val: 3}
-	n2 := &ListNode{Val: 4, Next: n1}
-	n3 := &ListNode{Val: 2, Next: n2}
+	list1 := genListNodes([]int{1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1})
+	list2 := genListNodes([]int{4, 6, 5})
 
-	l1 := &ListNode{Val: 4}
-	l2 := &ListNode{Val: 6, Next: l1}
-	l3 := &ListNode{Val: 5, Next: l2}
+	resp := addTwoNumbers(list1, list2)
 
-	addTwoNumbers(n3, l3)
+	fmt.Print(resp)
 }
 
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 	var (
-		i   int       = 0
 		n1  *ListNode = l1
-		one float64
+		one string
 
-		j    int       = 0
-		n2   *ListNode = l2
-		two  float64
-		plus float64 = 0
+		n2  *ListNode = l2
+		two string
+
+		resp *ListNode
 	)
 	for {
 		if n1 == nil {
 			break
 		}
-		plus = math.Pow10(i)
-		one += float64(n1.Val) * plus
-		i++
+		one = strconv.Itoa(n1.Val) + one
 		n1 = n1.Next
 	}
 
@@ -42,18 +38,40 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 		if n2 == nil {
 			break
 		}
-		plus = math.Pow10(j)
-		two += float64(n2.Val) * plus
-		j++
+		two = strconv.Itoa(n2.Val) + two
 		n2 = n2.Next
 	}
 
+	// 即使写出来也没用，这不是算法应该采用的做法
 	fmt.Println(one, two)
+	var onei *big.Int = big.NewInt(0)
+	var twoi *big.Int = big.NewInt(0)
+	onei.SetString(one, 0)
+	twoi.SetString(two, 0)
+	var result *big.Int = big.NewInt(0).Add(onei, twoi)
 
-	result := int64(one + two)
+	length := len(result.String())
 
-	fmt.Print(result)
-	return nil
+	for k := length - 1; k >= 0; k-- {
+		m := int64(math.Pow10(k))
+		o := big.NewInt(0).Div(result, big.NewInt(m))
+		result = big.NewInt(0).Sub(result, big.NewInt(0).Mul(o, big.NewInt(m)))
+
+		resp = &ListNode{Val: int(o.Int64()), Next: resp}
+	}
+
+	return resp
+}
+
+func genListNodes(arr []int) *ListNode {
+	var result *ListNode
+	for _, item := range arr {
+		result = &ListNode{
+			Val:  item,
+			Next: result,
+		}
+	}
+	return result
 }
 
 type ListNode struct {
