@@ -8,7 +8,8 @@ import (
 func main() {
 	//strs := []string{"flower", "flow", "flight"}
 	//strs := []string{"dog","racecar","car"}
-	strs := []string{"aa", "a"}
+	//strs := []string{"aa", "a"}
+	strs := []string{"c", "acc", "ccc"}
 	s := longestCommonPrefix(strs)
 	fmt.Print(s)
 }
@@ -23,7 +24,7 @@ func longestCommonPrefix(strs []string) string {
 
 	var prefix string = strs[0]
 	for i := 1; i < len(strs); i++ {
-		for strings.Index(strs[i], prefix) < 0 {
+		for strings.Index(strs[i], prefix) != 0 {
 			prefix = prefix[0 : len(prefix)-1]
 			if len(prefix) == 0 {
 				return ""
